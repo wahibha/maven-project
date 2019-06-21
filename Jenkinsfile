@@ -3,7 +3,9 @@ pipeline {
     stages{
         stage('Build'){
             steps {
-                sh 'mvn clean package'
+                bat 'mvn clean package'
+                bat "docker build . -t jenkinsimage:${env.BUILD_ID}"
+                bat "docker run --name webapp -t jenkinsimage:${env.BUILD_ID} -p 8081:8080"
             }
             post {
                 success {
