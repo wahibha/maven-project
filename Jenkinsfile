@@ -12,9 +12,25 @@ pipeline {
                 }
             }
         }
+        stage{
+            steps{
+                build job: 'static-checkstyle'
+            }
+        }
         stage('Deploy to staging'){
             steps{
+                timeout(time:5, unit:'DAYS'){
+                    input message : 'Approve Stagging Deployement' 
+                }
                 build job: 'Deploy-to-staging'
+            }
+            post{
+                success{
+                    echo 'Deploy to Staging success'
+                }
+                failure{
+                    echo 'Deployement fail'
+                }
             }
         }
     }
