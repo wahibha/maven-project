@@ -12,7 +12,7 @@ pipeline {
                 }
             }
         }
-        stage{
+        stage('Static-chekstyle'){
             steps{
                 build job: 'static-checkstyle'
             }
